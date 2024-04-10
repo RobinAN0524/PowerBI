@@ -1,0 +1,14 @@
+GP YTD AVG = 
+VAR Year = YEAR([CurrentMonth])
+RETURN 
+    CALCULATE(
+        AVERAGEX(
+            SUMMARIZE(
+                'Data - P/L', // Create a table based on data in 'Data - P/L'
+                'Data - P/L'[Store ID], 'Data - P/L'[Date], // Group By 'Store ID' and 'Date'
+                "Gross Profit", [Sales] - [COGS] // Calculate the 'Gross Profit' for each combination by [Sales] - [COGS]
+            ),
+            [Gross Profit] // Perform the averagex function of Gross profit column that we just created, iterate through each row
+        ),
+        YEAR('Data - P/L'[Date]) = Year
+    )
